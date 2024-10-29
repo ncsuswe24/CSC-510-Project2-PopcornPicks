@@ -37,14 +37,13 @@ class Search:
                 res.append(x)
         return res
 
-    def anywhere(self, word, visited_words):
+    def anywhere(self, words, visited_words):
         """
         Function to check visited words
         """
         res = []
         movie_dict={}
-        word = word.lower()
-        words=word.strip().split(" ")
+        words=words.lower().strip().split(" ")
         for x in self.df["title"]:
             if x not in visited_words:
                 curr = x.lower().strip().split(" ")
@@ -61,7 +60,7 @@ class Search:
                         if  w == w_curr :
                             full=True
                             break
-                    if full==True:
+                    if full:
                         score+=1                
                     elif half:
                         score+=0.5
