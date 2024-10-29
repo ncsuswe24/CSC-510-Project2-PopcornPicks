@@ -92,6 +92,49 @@ class Tests(unittest.TestCase):
         ]
         self.assertTrue(filtered_dict == expected_resp)
 
+    def test_search_hello(self):
+        """
+        Test case 5
+        """
+        search_word = "Hello"
+        finder = Search()
+        filtered_dict = finder.results_top_ten(search_word)
+        expected_resp = [
+            "Hello Marry Lou: Prom Night II(1987)",
+            "Hello Again (1987)",
+            "Hello Down There (1969)",
+            "Hello I Must Be Going (2012)",
+            "Hello Herman (2012)",
+            "Hello Ladies: The Movie (2014)",
+            "Hello Brother (1999)",
+            "Hello Lonesome (2010)",
+            "Hello Stranger (2010)",
+            "Hello Ghost (2010)"
+        ]
+        self.assertTrue(filtered_dict == expected_resp)
+
+
+    def test_search_hi_there(self):
+        """
+        Test case 6
+        """
+        search_word = "hi there"
+        finder = Search()
+        filtered_dict = finder.results_top_ten(search_word)
+        expected_resp = [
+            "higglety pigglty pop! or there must be more to life (2010)",
+            "phil ochs: there but for fortune (2011)",
+            "the air up there (1994)",
+            "til there was you (1997)",
+            "love is all there is (1996)",
+            "being there (1979)",
+            "the man who wasn't me (2001)",
+            "and then there were none (1945)",
+            "i'll be there (2003)",
+            "there goes my baby (1994)"
+        ]
+        self.assertTrue(filtered_dict == expected_resp)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -42,12 +42,36 @@ class Search:
         Function to check visited words
         """
         res = []
+        movie_dict={}
         word = word.lower()
+        words=word.strip().split(" ")
         for x in self.df["title"]:
             if x not in visited_words:
-                curr = x.lower()
-                if word in curr:
-                    res.append(x)
+                curr = x.lower().strip().split(" ")
+                score=0
+                for w in words:
+                    half=False
+                    quarter=False
+                    for w_curr in curr:
+                        if w in w_curr:
+                            quarter=True
+                            if w_curr.startswith(w):
+                                half=True
+                                if  w == w_curr :
+                                    score+=1
+                                    half=False
+                                    quarter=False
+                                    break
+                                    
+                    if half:
+                        score+=0.5
+                    elif quarter:
+                        score+=0.25
+                        
+                movie_dict[" ".join(curr)]=score
+        filtered_dict = {k: v for k, v in movie_dict.items() if v != 0}
+        sorted_dict = dict(sorted(filtered_dict.items(), key=lambda item: item[1],reverse=True))
+        res=sorted_dict.keys()
         return res
 
     def results(self, word):
