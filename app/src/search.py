@@ -61,12 +61,11 @@ class Search:
                             full=True
                             break
                     if full:
-                        score+=1                
+                        score+=1
                     elif half:
                         score+=0.5
                     elif quarter:
-                        score+=0.25
-                        
+                        score+=0.25    
                 movie_dict[x]=score
         filtered_dict = {k: v for k, v in movie_dict.items() if v != 0}
         sorted_dict = dict(sorted(filtered_dict.items(), key=lambda item: item[1],reverse=True))
