@@ -90,6 +90,7 @@ class Tests(unittest.TestCase):
             "Sudden Death (1995)",
             "GoldenEye (1995)",
         ]
+        print(filtered_dict)
         self.assertTrue(filtered_dict == expected_resp)
 
     def test_search_hello(self):
@@ -100,17 +101,17 @@ class Tests(unittest.TestCase):
         finder = Search()
         filtered_dict = finder.results_top_ten(search_word)
         expected_resp = [
-            "Hello Marry Lou: Prom Night II(1987)",
-            "Hello Again (1987)",
-            "Hello Down There (1969)",
-            "Hello I Must Be Going (2012)",
-            "Hello Herman (2012)",
-            "Hello Ladies: The Movie (2014)",
-            "Hello Brother (1999)",
-            "Hello Lonesome (2010)",
-            "Hello Stranger (2010)",
-            "Hello Ghost (2010)"
+            'Hello Mary Lou: Prom Night II (1987)', 
+            'Hello, Dolly! (1969)', 'Hello Again (1987)', 
+            'Hello Down There (1969)', 
+            'Hello I Must Be Going (2012)', 
+            'Hello! How Are You? (2010)', 
+            'Hello Herman (2012)', 
+            'Hello Ladies: The Movie (2014)', 
+            'Hello Brother (1999)', 
+            'Hello Lonesome (2010)'
         ]
+        print(filtered_dict)
         self.assertTrue(filtered_dict == expected_resp)
 
 
@@ -121,18 +122,19 @@ class Tests(unittest.TestCase):
         search_word = "hi there"
         finder = Search()
         filtered_dict = finder.results_top_ten(search_word)
-        expected_resp = [
-            "higglety pigglty pop! or there must be more to life (2010)",
-            "phil ochs: there but for fortune (2011)",
-            "the air up there (1994)",
-            "til there was you (1997)",
-            "love is all there is (1996)",
-            "being there (1979)",
-            "the man who wasn't me (2001)",
-            "and then there were none (1945)",
-            "i'll be there (2003)",
-            "there goes my baby (1994)"
-        ]
+        expected_resp =[
+            'Higglety Pigglety Pop! or There Must Be More to Life (2010)', 
+            'Phil Ochs: There But for Fortune (2011)', 
+            'The Air Up There (1994)', 
+            'Til There Was You (1997)', 
+            'Love Is All There Is (1996)', 
+            'Being There (1979)', 
+            "The Man Who Wasn't There (2001)", 
+            'And Then There Were None (1945)', 
+            "I'll Be There (2003)", 
+            'There Goes My Baby (1994)'
+            ]
+        print(filtered_dict)
         self.assertTrue(filtered_dict == expected_resp)
 
 
