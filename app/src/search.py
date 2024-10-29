@@ -52,23 +52,23 @@ class Search:
                 for w in words:
                     half=False
                     quarter=False
+                    full=False
                     for w_curr in curr:
                         if w in w_curr:
                             quarter=True
-                            if w_curr.startswith(w):
-                                half=True
-                                if  w == w_curr :
-                                    score+=1
-                                    half=False
-                                    quarter=False
-                                    break
-                                    
-                    if half:
+                        if w_curr.startswith(w):
+                            half=True
+                        if  w == w_curr :
+                            full=True
+                            break
+                    if full==True:
+                        score+=1                
+                    elif half:
                         score+=0.5
                     elif quarter:
                         score+=0.25
                         
-                movie_dict[" ".join(curr)]=score
+                movie_dict[x]=score
         filtered_dict = {k: v for k, v in movie_dict.items() if v != 0}
         sorted_dict = dict(sorted(filtered_dict.items(), key=lambda item: item[1],reverse=True))
         res=sorted_dict.keys()
