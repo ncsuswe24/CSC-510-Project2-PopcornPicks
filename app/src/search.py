@@ -38,9 +38,16 @@ class Search:
                 res.append(x)
         return res
     def correct_spelling(self,input_text):
+        """
+        Function to correct misspelled words
+        """
         spell = SpellChecker()
         words = input_text.split()
-        corrected_words = [spell.correction(word) if spell.unknown([word]) else word for word in words]
+        corrected_words = [
+            spell.correction(word) 
+            if spell.unknown([word]) 
+            else word for word in words
+            ]
         return " ".join(corrected_words)
 
     def anywhere(self, words, visited_words):
