@@ -44,8 +44,8 @@ class Search:
         spell = SpellChecker()
         words = input_text.split()
         corrected_words = [
-            spell.correction(word) 
-            if spell.unknown([word]) 
+            spell.correction(word)
+            if spell.unknown([word])
             else word for word in words
             ]
         return " ".join(corrected_words)
