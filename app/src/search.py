@@ -7,6 +7,7 @@ This code is licensed under MIT license (see LICENSE for details)
 import os
 import pandas as pd
 #from flask import jsonify, request, render_template
+from spellchecker import SpellChecker
 
 
 app_dir = os.path.dirname(os.path.abspath(__file__))
@@ -36,6 +37,11 @@ class Search:
             if curr[:n] == word:
                 res.append(x)
         return res
+    def correct_spelling(self,input_text):
+        spell = SpellChecker()
+        words = input_text.split()
+        corrected_words = [spell.correction(word) if spell.unknown([word]) else word for word in words]
+        return " ".join(corrected_words)
 
     def anywhere(self, words, visited_words):
         """
@@ -63,9 +69,9 @@ class Search:
                     if full:
                         score+=1
                     elif half:
-                        score+=0.5
+                        score+=0.2
                     elif quarter:
-                        score+=0.25
+                        score+=0.1
                 movie_dict[x]=score
         filtered_dict = {k: v for k, v in movie_dict.items() if v != 0}
         sorted_dict = dict(sorted(filtered_dict.items(), key=lambda item: item[1],reverse=True))
