@@ -26,7 +26,7 @@ class Search:
         """
         Search object constructor.
         """
-        pass
+        return
 
     def starts_with(self, word):
         """
@@ -106,4 +106,3 @@ class Search:
         Function to get top 10 results.
         """
         return self.results(word)[:10]
-
