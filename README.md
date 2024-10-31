@@ -102,6 +102,7 @@ Here are some of the new changes implemented for Project 2:
 * [Filtering Options](#filtering-options)
 * [Changes to Recommendation Logic](#recommendation-logic)
 * [UI Changes](#ui-changes)
+* [Presentation Video](#fall-2024-project-2-presentation-video)
 
 ## Tech stack Used👨‍💻:
 
