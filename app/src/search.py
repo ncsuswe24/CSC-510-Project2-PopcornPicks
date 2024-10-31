@@ -23,11 +23,14 @@ class Search:
     df = pd.read_csv(project_dir + "/data/movies.csv")
 
     def __init__(self):
+        """
+        Search object constructor.
+        """
         pass
 
     def starts_with(self, word):
         """
-        Function to check movie prefix
+        Checks movie prefix.
         """
         n = len(word)
         res = []
@@ -37,9 +40,10 @@ class Search:
             if curr[:n] == word:
                 res.append(x)
         return res
+
     def correct_spelling(self,input_text):
         """
-        Function to correct misspelled words
+        Function to correct misspelled words.
         """
         spell = SpellChecker()
         words = input_text.split()
@@ -52,7 +56,7 @@ class Search:
 
     def anywhere(self, words, visited_words):
         """
-        Function to check visited words
+        Function to check visited words.
         """
         res = []
         movie_dict={}
@@ -87,7 +91,7 @@ class Search:
 
     def results(self, word):
         """
-        Function to serve the result render
+        Function to serve the result render.
         """
         starts_with = self.starts_with(word)
         visited_words = set()
@@ -99,10 +103,7 @@ class Search:
 
     def results_top_ten(self, word):
         """
-        Function to get top 10 results
+        Function to get top 10 results.
         """
         return self.results(word)[:10]
 
-
-#if __name__ == "__main__":
-#    app.run()

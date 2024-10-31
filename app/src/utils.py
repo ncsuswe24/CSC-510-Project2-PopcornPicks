@@ -15,8 +15,8 @@ import pandas as pd
 
 def create_colored_tags(genres):
     """
-        Utitilty function to create colored tags for different
-        movie genres
+    Utitilty function to create colored tags for different
+    movie genres.
     """
     # Define colors for specific genres
     genre_colors = {
@@ -51,7 +51,7 @@ def create_colored_tags(genres):
 
 def beautify_feedback_data(data):
     """
-    Utility function to beautify the feedback json containing predicted movies for sending in email
+    Utility function to beautify the feedback json containing predicted movies for sending in email.
     """
     # Create empty lists for each category
     yet_to_watch = []
@@ -76,7 +76,7 @@ def beautify_feedback_data(data):
 
 def create_movie_genres(movie_genre_df):
     """
-        Utility function for creating a dictionary for movie-genres mapping
+    Utility function for creating a dictionary for movie-genres mapping.
     """
     # Create a dictionary to map movies to their genres
     movie_to_genres = {}
@@ -90,7 +90,7 @@ def create_movie_genres(movie_genre_df):
 
 def send_email_to_user(recipient_email, categorized_data):
     """
-    Utility function to send movie recommendations to user over email
+    Utility function to send movie recommendations to user over email.
     """
 
     email_html_content = """
