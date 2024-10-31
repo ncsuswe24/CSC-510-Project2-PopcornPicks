@@ -169,6 +169,10 @@ We have made changes to the recommendation system. Users can review the movies t
 
 Each movie in the database now has its own webpage where the users can read up on the movie and also view reviews from other users. This helps them make more informed decisions. This also cleans up the UI and makes for a much better experience. The users can explore and learn new information instead of being bombarded with it. 
 
+## Fall 2024 Project 2 Presentation Video
+
+You can see the project presentation at - [Project 2 Fall 2024 Group 15](https://www.youtube.com/watch?v=pB18wWz5j5U)
+
 ## Future Scope
 
 PopcornPicks is a dynamic project with endless possibilities for expansion and enhancement. Here are some exciting avenues for future development:
