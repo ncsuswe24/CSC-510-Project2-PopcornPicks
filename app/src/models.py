@@ -10,14 +10,14 @@ from src import db, login_manager
 @login_manager.user_loader
 def load_user(user_id):
     """
-        Function to get current user
+    Retrieves the current user from the database using the ID.
     """
     return User.query.get(int(user_id))
 
 
 class User(db.Model, UserMixin):
     """
-        User Model Table
+    Database model for a User.
     """
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
@@ -33,7 +33,7 @@ class User(db.Model, UserMixin):
 # pylint: disable=R0903
 class Movie(db.Model):
     """
-        Movie Table
+    Database model for a Movie.
     """
     movieId = db.Column(db.Integer, primary_key=True, nullable=False)
     title = db.Column(db.String(200), nullable=False)
@@ -50,7 +50,7 @@ class Movie(db.Model):
 # pylint: disable=R0903
 class Review(db.Model):
     """
-        Review Table
+    Database model for a Review.
     """
     review_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     review_text = db.Column(db.Text, nullable=False)
@@ -63,7 +63,7 @@ class Review(db.Model):
 
 class ListMovie(db.Model):
     """
-        List Table
+    Database model for a ListMovie.
     """
     list_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

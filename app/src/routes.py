@@ -39,7 +39,7 @@ def landing_page():
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     """
-        Signup Page Flow
+    Flask route for the signup page.
     """
     username = ""
     try:
@@ -72,7 +72,7 @@ def signup():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """
-        Login Page Flow
+    Flask route for the login page.
     """
     try:
         # If user has already logged in earlier and has an active session
@@ -101,7 +101,7 @@ def login():
 @app.route('/logout')
 def logout():
     """
-        Logout Function
+    Flask route for logging the user out.
     """
     logout_user()
     return redirect('/')
@@ -110,7 +110,7 @@ def logout():
 @login_required
 def profile_page():
     """
-        Profile Page
+    Flask route for the profile page.
     """
     reviews_objects = Review.query.filter_by(user_id=current_user.id).all()
     reviews = []
@@ -132,7 +132,7 @@ def profile_page():
 @login_required
 def userlist_page():
     """
-        User List Page
+    Flask route for the list of users page.
     """
     user_objects = User.query.all()
     movies = pd.read_csv(os.path.join(project_dir, "data", "movies.csv"))
@@ -165,7 +165,7 @@ def userlist_page():
 @login_required
 def search_page():
     """
-        Search Page
+    Flask route for the search page.
     """
     if current_user.is_authenticated:
         return render_template("search.html", user=current_user, search=True)
@@ -174,7 +174,7 @@ def search_page():
 @app.route("/predict", methods=["POST"])
 def predict():
     """
-    Predicts movie recommendations based on user ratings.
+    Flask route for predicting user movie recommendations.
     """
     data = json.loads(request.data)
     data1 = data["movie_list"]
@@ -199,7 +199,7 @@ def predict():
 @app.route("/displaylist", methods=["POST"])
 def displaylist():
     """
-    Predicts movie recommendations based on user ratings.
+    Flask route for displaing the user's recommended movies.
     """
     data = json.loads(request.data)
     user_object = User.query.filter_by(username=current_user.username).first()
@@ -228,7 +228,7 @@ def displaylist():
 @app.route("/search", methods=["POST"])
 def search():
     """
-        Handles movie search requests.
+    Flask route for searching movies to recommend by.
     """
     term = request.form["q"]
     finder = Search()
@@ -240,7 +240,7 @@ def search():
 @app.route("/chat", methods=["GET"])
 def chat_page():
     """
-        Renders chat room page
+    Flask route for the chat room modal.
     """
     if current_user.is_authenticated:
         return render_template("movie_chat.html", user=current_user)
@@ -249,22 +249,22 @@ def chat_page():
 @socket.on('connections')
 def show_connection(data):
     """
-        Prints out if the connection to the chat page is successful
+    Flask route for connection status of the chat page.
     """
     print('received message: ' + data)
 
 @socket.on('message')
 def broadcast_message(data):
     """
-        Distributes messages sent to the server to all clients in real time
+    Flask route for sending a message in the chat room.
     """
     emit('message', {'username': data['username'], 'msg': data['msg']}, broadcast=True)
 
 @app.route("/getPosterURL", methods=["GET"])
 def get_poster_url():
     """
-    Retrieve the poster URL for the recommended movie based on IMDb ID.
-    return: JSON response containing the poster URL.
+    Flask route for retrieving the poster URL for the recommended movie based on
+    the IMDb ID.
     """
     imdb_id = request.args.get("imdbID")
     poster_url = fetch_poster_url(imdb_id)
@@ -272,7 +272,7 @@ def get_poster_url():
 
 def fetch_poster_url(imdb_id):
     """
-    Fetch the poster URL for a movie from The Movie Database (TMDB) API.
+    Fetches the poster URL for a movie from The Movie Database (TMDB) API.
     """
     timeout = 100
     url = f"https://api.themoviedb.org/3/find/{imdb_id}?"\
@@ -289,7 +289,7 @@ def fetch_poster_url(imdb_id):
 @login_required
 def post_review():
     """
-        API for the user to submit a review
+    Flask route for submitting a review for a movie.
     """
     # Check if the movie already exists in the database.
     # If it exists, fetch the movie ID and save the review
@@ -329,7 +329,7 @@ def post_review():
 @login_required
 def movie_page():
     """
-        Get movies and their reviews from CSV using pandas
+    Flask route for the movie page.
     """
     movie_id = request.args.get('movie_id')  # Get the movie ID from the query parameters
     movie_id = int(movie_id)
@@ -375,7 +375,7 @@ def movie_page():
 @login_required
 def new_movies():
     """
-        API to fetch new movies
+    Flask route for fetching new movies from the API.
     """
     # Replace YOUR_TMDB_API_KEY with your actual TMDb API key
     tmdb_api_key = TMDB_API_KEY
@@ -408,7 +408,7 @@ def new_movies():
 @app.route("/list", methods=["GET"])
 def list_page():
     """
-        Renders chat room page
+    Flask route for the movie list page.
     """
     if current_user.is_authenticated:
         return render_template("list.html", user=current_user)
