@@ -26,6 +26,10 @@ def recommend_for_new_user(user_rating, selected_genre=None, selected_year=None)
     """
     Generates a list of recommended movie titles for a new user based on their ratings.
     """
+    if not user_rating:
+        return pd.DataFrame(
+            columns=["movieId", "title", "genres", "imdb_id", "overview", "poster_path", "runtime", "recommended"])
+
     # ratings = pd.read_csv(os.path.join(project_dir, "data", "ratings.csv"))
     movies = pd.read_csv(os.path.join(project_dir, "data", "movies.csv"))
     user = pd.DataFrame(user_rating)
