@@ -331,38 +331,28 @@ def movie_page():
     """
     Flask route for the movie page.
     """
-    movie_id = request.args.get('movie_id')  # Get the movie ID from the query parameters
-    movie_id = int(movie_id)
+    movie_id = int(request.args.get('movie_id'))
 
-    # Load the CSV file into a DataFrame
     movies_df = pd.read_csv(os.path.join(project_dir, "data", "movies.csv"))
 
-    # Find the movie details by filtering the DataFrame
-    movie_details = movies_df[movies_df['movieId'] == movie_id]
+    try:
+        movie_info = movies_df.loc[movies_df['movieId'] == movie_id].iloc[0]
+    except IndexError:
+        print("No movie found with the given movie_id")
+        return "Movie not found", 404
 
-    if movie_details.empty:
-        print("No movie found with the given movie_id")  # Debugging statement
-        return "Movie not found", 404  # Return an error message if the movie doesn't exist
-
-    movie_info = movie_details.iloc[0]  # Get the first matching movie
     reviews = []
 
-    # Fetch reviews based on the movieId from the database
-    reviews_objects = Review.query.filter_by(movieId=int(movie_info['movieId'])).all()
-    for review_object in reviews_objects:
+    for review_object in Review.query.filter_by(movieId=movie_id).all():
         user = User.query.filter_by(id=review_object.user_id).first()
-        obj2 = {
+        reviews.append({
             "username": user.username,
             "name": f"{user.first_name} {user.last_name}",
             "review_text": review_object.review_text
-        }
-        reviews.append(obj2)
+        })
 
-    # **Check if the movie exists in the database**
-    movie_in_db = Movie.query.filter_by(movieId=movie_id).first()
-    if not movie_in_db:
-        # **Create a new Movie object and add it to the database**
-        movie_in_db = Movie(
+    if not Movie.query.filter_by(movieId=movie_id).first():
+        db.session.add(Movie(
             movieId=int(movie_info['movieId']),
             title=movie_info['title'],
             runtime=int(movie_info['runtime']) if not pd.isna(movie_info['runtime']) else None,
@@ -372,15 +362,12 @@ def movie_page():
             poster_path=movie_info['poster_path'] if 'poster_path' in movie_info else None,
             total_likes=0,
             total_dislikes=0
-        )
-        db.session.add(movie_in_db)
+        ))
         db.session.commit()
 
-    # **Now you can safely get the likes and dislikes counts**
     likes_count = Like.query.filter_by(movieId=movie_id, like_value=1).count()
     dislikes_count = Like.query.filter_by(movieId=movie_id, like_value=-1).count()
 
-    # Check if current user has liked/disliked this movie
     user_reaction = Like.query.filter_by(movieId=movie_id, user_id=current_user.id).first()
     user_has_liked = user_reaction.like_value == 1 if user_reaction else False
     user_has_disliked = user_reaction.like_value == -1 if user_reaction else False
@@ -453,7 +440,7 @@ def like_movie():
     """
     data = request.get_json()
     movie_id = data.get('movieId')
-    like_value = data.get('like_value')  
+    like_value = data.get('like_value')
 
     existing_like = Like.query.filter_by(user_id=current_user.id, movieId=movie_id).first()
     if existing_like:
