@@ -74,7 +74,7 @@ class ListMovie(db.Model):
 
     def __repr__(self):
         return f"{self.user_id} - {self.movieId}"
-    
+
 class Like(db.Model):
     """
     Database model for a Like.
@@ -82,7 +82,8 @@ class Like(db.Model):
     like_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     movieId = db.Column(db.Integer, db.ForeignKey('movie.movieId'), nullable=False)
-    like_value = db.Column(db.Integer, nullable=False)  
+    like_value = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
         return f"{self.user_id} {'liked' if self.like_value == 1 else 'disliked'} {self.movieId}"
+    
