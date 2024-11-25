@@ -1,6 +1,6 @@
+
 $(document).ready(function () {
     function fetchPosterURL(obj) {
-        var posterURL = null;
         $.ajax({
             type: "GET",
             url: "/getPosterURL", 
@@ -8,22 +8,52 @@ $(document).ready(function () {
             data: { imdbID: obj.innerHTML },
             async: false, 
             success: function (response) {
-                posterURL = response.posterURL;
-                var poster = `<img src=${response.posterURL} alt="Movie Poster" 
-                    class="poster-image" style="width: 75%; height: auto; margin: 0;"></img>`
-                obj.innerHTML += poster;        
+                var posterHTML = `<img src="${response.posterURL}" alt="Movie Poster" class="poster-image" style="width: 75%; height: auto; margin: 0;">`;
+                obj.innerHTML += posterHTML;        
             },
             error: function (error) {
                 console.log("Error fetching poster URL: " + error);
             },
         });
-        return posterURL;
-    };
+    }
 
-    $('.imdbId').map((index, obj) => {
+    $('.imdbId').each((index, obj) => {
         fetchPosterURL(obj);
     });
-    
-    
+
+    $('.like-dislike-buttons').each(function() {
+        var container = $(this);
+        var movieId = container.data('movie-id');
+        var likeButton = container.find('#like-button');
+        var dislikeButton = container.find('#dislike-button');
+
+        likeButton.click(function() {
+            sendLikeDislike(movieId, 1, likeButton, dislikeButton);
+        });
+
+        dislikeButton.click(function() {
+            sendLikeDislike(movieId, -1, likeButton, dislikeButton);
+        });
+    });
+
+    function sendLikeDislike(movieId, likeValue, likeButton, dislikeButton) {
+        $.ajax({
+            type: "POST",
+            url: "/like",
+            contentType: "application/json",
+            data: JSON.stringify({
+                'movieId': movieId,
+                'like_value': likeValue
+            }),
+            success: function(response) {
+                likeButton.text('Like (' + response.likes_count + ')');
+                dislikeButton.text('Dislike (' + response.dislikes_count + ')');
+                likeButton.prop('disabled', true);
+                dislikeButton.prop('disabled', true);
+            },
+            error: function(error) {
+                console.log('Error:', error);
+            }
+        });
+    }
 });
-  

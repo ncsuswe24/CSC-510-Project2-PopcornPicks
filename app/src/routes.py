@@ -17,7 +17,7 @@ import pandas as pd
 from src import app, db, bcrypt, socket
 from src.search import Search
 from src.item_based import recommend_for_new_user
-from src.models import User, Movie, Review, ListMovie
+from src.models import User, Movie, Review, ListMovie, Like
 
 app_dir = os.path.dirname(os.path.abspath(__file__))
 code_dir = os.path.dirname(app_dir)
@@ -358,17 +358,48 @@ def movie_page():
         }
         reviews.append(obj2)
 
+    # **Check if the movie exists in the database**
+    movie_in_db = Movie.query.filter_by(movieId=movie_id).first()
+    if not movie_in_db:
+        # **Create a new Movie object and add it to the database**
+        movie_in_db = Movie(
+            movieId=int(movie_info['movieId']),
+            title=movie_info['title'],
+            runtime=int(movie_info['runtime']) if not pd.isna(movie_info['runtime']) else None,
+            overview=movie_info['overview'],
+            genres=movie_info['genres'],
+            imdb_id=movie_info['imdb_id'],
+            poster_path=movie_info['poster_path'] if 'poster_path' in movie_info else None,
+            total_likes=0,
+            total_dislikes=0
+        )
+        db.session.add(movie_in_db)
+        db.session.commit()
+
+    # **Now you can safely get the likes and dislikes counts**
+    likes_count = Like.query.filter_by(movieId=movie_id, like_value=1).count()
+    dislikes_count = Like.query.filter_by(movieId=movie_id, like_value=-1).count()
+
+    # Check if current user has liked/disliked this movie
+    user_reaction = Like.query.filter_by(movieId=movie_id, user_id=current_user.id).first()
+    user_has_liked = user_reaction.like_value == 1 if user_reaction else False
+    user_has_disliked = user_reaction.like_value == -1 if user_reaction else False
+
     movie_info_dict = {
         "title": movie_info['title'],
         "runtime": movie_info['runtime'],
         "overview": movie_info['overview'],
         "genres": movie_info['genres'],
         "imdb_id": movie_info['imdb_id'],
-        "reviews": reviews
+        "reviews": reviews,
+        "likes_count": likes_count,
+        "dislikes_count": dislikes_count,
+        "user_has_liked": user_has_liked,
+        "user_has_disliked": user_has_disliked,
+        "movieId": int(movie_info['movieId'])
     }
 
-    return render_template("movie.html", movies=[movie_info_dict],
-                           user=current_user)  # Return a list with one movie object
+    return render_template("movie.html", movies=[movie_info_dict], user=current_user)
 
 
 @app.route('/new_movies', methods=["GET"])
@@ -413,3 +444,59 @@ def list_page():
     if current_user.is_authenticated:
         return render_template("list.html", user=current_user)
     return redirect(url_for('landing_page'))
+
+@app.route('/like', methods=['POST'])
+@login_required
+def like_movie():
+    """
+    Handles user like/dislike actions for a movie.
+    """
+    data = request.get_json()
+    movie_id = data.get('movieId')
+    like_value = data.get('like_value')  
+
+    existing_like = Like.query.filter_by(user_id=current_user.id, movieId=movie_id).first()
+    if existing_like:
+        return jsonify({'message': 'You have already reacted to this movie.'}), 400
+
+    movie = Movie.query.filter_by(movieId=movie_id).first()
+    if not movie:
+        movies_df = pd.read_csv(os.path.join(project_dir, "data", "movies.csv"))
+        movie_details = movies_df[movies_df['movieId'] == int(movie_id)]
+        if movie_details.empty:
+            return jsonify({'message': 'Movie not found.'}), 404
+        movie_info = movie_details.iloc[0]
+        movie = Movie(
+            movieId=int(movie_info['movieId']),
+            title=movie_info['title'],
+            runtime=int(movie_info['runtime']) if not pd.isna(movie_info['runtime']) else None,
+            overview=movie_info['overview'],
+            genres=movie_info['genres'],
+            imdb_id=movie_info['imdb_id'],
+            poster_path=movie_info['poster_path'] if 'poster_path' in movie_info else None,
+            total_likes=0,
+            total_dislikes=0
+        )
+        db.session.add(movie)
+        db.session.commit()
+
+    new_like = Like(
+        user_id=current_user.id,
+        movieId=movie_id,
+        like_value=like_value
+    )
+    db.session.add(new_like)
+
+    if like_value == 1:
+        movie.total_likes = movie.total_likes + 1 if movie.total_likes else 1
+    else:
+        movie.total_dislikes = movie.total_dislikes + 1 if movie.total_dislikes else 1
+    db.session.commit()
+
+    likes_count = Like.query.filter_by(movieId=movie_id, like_value=1).count()
+    dislikes_count = Like.query.filter_by(movieId=movie_id, like_value=-1).count()
+
+    return jsonify({
+        'likes_count': likes_count,
+        'dislikes_count': dislikes_count
+    })
