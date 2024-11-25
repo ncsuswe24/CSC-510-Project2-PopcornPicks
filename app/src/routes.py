@@ -331,15 +331,15 @@ def movie_page():
     """
     Flask route for the movie page.
     """
-    movie_id = int(request.args.get('movie_id'))  
+    movie_id = int(request.args.get('movie_id'))
 
     movies_df = pd.read_csv(os.path.join(project_dir, "data", "movies.csv"))
 
     try:
         movie_info = movies_df.loc[movies_df['movieId'] == movie_id].iloc[0]
     except IndexError:
-        print("No movie found with the given movie_id")  
-        return "Movie not found", 404 
+        print("No movie found with the given movie_id")
+        return "Movie not found", 404
 
     reviews = []
 
