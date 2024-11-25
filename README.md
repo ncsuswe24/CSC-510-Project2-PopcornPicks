@@ -112,38 +112,13 @@ Check out the significant changes that we made for Project 3:
 TODO
 
 
-## Getting Started
-
-Step 1:
-Git Clone the Repository
-
-    git clone https://github.com/tanmaypardeshi/PopcornPicks.git
-
-(OR) Download the .zip file on your local machine from the following link
-
-    https://github.com/tanmaypardeshi/PopcornPicks
-
-Step 2:
-Follow the setup instructions in the wiki documentation
-
-    https://github.com/tanmaypardeshi/PopcornPicks/wiki/Installation-and-setup
-
-<b>Finally, start enjoying personalized movie recommendations!</b>
-
 ### Render Deployment
 This project is now hosted on the free web service [Render](https://render.com)! You can access the site at this URL:
 
 [http://popcorn-picks.onrender.com](http://popcorn-picks.onrender.com)
 
 *WARNING*: Since this is hosted on the free tier on render, it can be slow at times, use at your own discretion. 
-
-#### Deploying to render
 The deployment CI is set up such that any commits to the master branch will trigger a reploy of the project. This generally takes around 2-3 minutes, so if you try and access the site right after committing and receive a 502, it is most likely that the deploy has not finished yet
-
-### Lists Feature
-![Lists](./asset/ListsFeature.gif)
-
-We have added a new 'Lists' feature. The users can create a list of (at least) five movies they would like to recommend to other users. The users can view the lists of other users on the 'Lists' page. It creates a sense of community. They are recommendations from other human users and not a computer.
 
 ### Filtering options
 ![Filtering](./asset/Filtering.gif)
