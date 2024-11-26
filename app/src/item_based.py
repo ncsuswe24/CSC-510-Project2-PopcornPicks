@@ -38,6 +38,9 @@ def recommend_for_new_user(user_rating, selected_genre=None, selected_year=None)
             ]
         )
 
+    user_rating = [item for item in user_rating if
+                   isinstance(item["rating"], (int, float)) and 1 <= item["rating"] <= 5] \
+        if user_rating and isinstance(user_rating, list) else None
     if not user_rating:
         return default
 
@@ -50,6 +53,9 @@ def recommend_for_new_user(user_rating, selected_genre=None, selected_year=None)
 
     # Find the row indices for the user-rated movies in the movies dataset
     user_indices = movies[movies['title'].isin(user_ratings_df['title'])].index.to_numpy()
+
+    if user_indices.size == 0:
+        return default
 
     # Extract the corresponding embeddings and ratings
     user_embeddings = embeddings[user_indices]
