@@ -355,7 +355,8 @@ class Tests(unittest.TestCase):
         """
         ts = [{"title": "Toy Story (1995)", "rating": 5.0}]
         recommendations = recommend_for_new_user(ts, selected_genre="Action|Comedy")
-        self.assertTrue(all(("Action" in genres or "Comedy" in genres) for genres in recommendations['genres']))
+        self.assertTrue(all(("Action" in genres or "Comedy" in genres)
+                            for genres in recommendations['genres']))
         self.assertEqual(recommendations.shape[0], 9)
 
     def test_drama_and_romance(self):
@@ -365,7 +366,8 @@ class Tests(unittest.TestCase):
         """
         ts = [{"title": "Toy Story (1995)", "rating": 5.0}]
         recommendations = recommend_for_new_user(ts, selected_genre="Drama|Romance")
-        self.assertTrue(all(("Drama" in genres or "Romance" in genres) for genres in recommendations['genres']))
+        self.assertTrue(all(("Drama" in genres or "Romance" in genres)
+                            for genres in recommendations['genres']))
         self.assertEqual(recommendations.shape[0], 9)
 
     def test_comedy_drama_and_romance(self):
@@ -375,7 +377,7 @@ class Tests(unittest.TestCase):
         """
         ts = [{"title": "Toy Story (1995)", "rating": 5.0}]
         recommendations = recommend_for_new_user(ts, selected_genre="Comedy|Drama|Romance")
-        self.assertTrue(all(("Comedy" in genres or "Drama" in genres or "Romance" in genres) 
+        self.assertTrue(all(("Comedy" in genres or "Drama" in genres or "Romance" in genres)
                             for genres in recommendations['genres']))
         self.assertEqual(recommendations.shape[0], 9)
 
@@ -446,7 +448,8 @@ class Tests(unittest.TestCase):
         Test case 34
         """
         ts = [{"title": "Toy Story (1995)", "rating": 5.0}]
-        recommendations = recommend_for_new_user(ts, selected_genre="Slice of Life", selected_year=2030)
+        recommendations = recommend_for_new_user(ts, selected_genre="Slice of Life",
+                                                 selected_year=2030)
         self.assertEqual(recommendations.shape[0], 0)
 
     def test_no_matching_genre_year_3(self):
