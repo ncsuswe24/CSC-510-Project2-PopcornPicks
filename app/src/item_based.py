@@ -9,7 +9,6 @@ import os
 import re
 import pandas as pd
 import numpy as np
-from sklearn.metrics.pairwise import cosine_similarity
 
 app_dir = os.path.dirname(os.path.abspath(__file__))
 code_dir = os.path.dirname(app_dir)
@@ -61,8 +60,10 @@ def recommend_for_new_user(user_rating, selected_genre=None, selected_year=None)
     user_embeddings = embeddings[user_indices]
     user_ratings = user_ratings_df['rating'].to_numpy().reshape(-1, 1)  # Column vector of ratings
 
-    # Compute the weighted sum of embeddings
+    # Compute the weighted sum of embeddings, and normalize the result.
     user_profile = np.sum(user_embeddings * user_ratings, axis=0) / user_ratings.sum()
+    norm = np.linalg.norm(user_profile)
+    user_profile = user_profile / norm if norm > 0 else user_profile
 
     # Filter by genre if specified
     if selected_genre:
@@ -79,8 +80,10 @@ def recommend_for_new_user(user_rating, selected_genre=None, selected_year=None)
         return default
 
     # Compute similarity between user profile and all movie embeddings
+    # Because the embeddings have already been normalized, this calculation is as simple
+    # as finding the dot product between the two.
     embeddings = embeddings[movies.index.to_numpy()]
-    similarities = cosine_similarity([user_profile], embeddings).flatten()
+    similarities = np.dot(embeddings, user_profile)
 
     # Get top recommendations, exclude movies the user has already rated, sort by similarity score.
     movies['similarity'] = similarities
