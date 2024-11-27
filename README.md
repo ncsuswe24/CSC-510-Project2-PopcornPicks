@@ -5,7 +5,7 @@
 
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://gitHub.com/ncsuswe24/CSC-510-Project2-PopcornPicks/graphs/commit-activity) 
 [![Unittest](https://github.com/ncsuswe24/CSC-510-Project2-PopcornPicks/actions/workflows/unittest.yml/badge.svg?branch=master&event=push)](https://github.com/ncsuswe24/CSC-510-Project2-PopcornPicks/actions/workflows/unittest.yml) 
-[![codecov](https://codecov.io/gh/ncsuswe24/CSC-510-Project3-PopcornPicks/graph/badge.svg?token=SZWTDA4REW)](https://codecov.io/gh/ncsuswe24/CSC-510-Project3-PopcornPicks) 
+[![codecov](https://codecov.io/gh/ncsuswe24/CSC-510-Project2-PopcornPicks/graph/badge.svg?token=QIP3TMS5NV)](https://codecov.io/gh/ncsuswe24/CSC-510-Project2-PopcornPicks)
 [![StyleCheck: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
 [![GitHub issues](https://img.shields.io/github/issues/ncsuswe24/CSC-510-Project2-PopcornPicks.svg)](https://github.com/ncsuswe24/CSC-510-Project2-PopcornPicks/issues?q=is%3Aopen+is%3Aissue) 
 [![Contributors Activity](https://img.shields.io/github/commit-activity/m/ncsuswe24/CSC-510-Project2-PopcornPicks)](https://github.com/ncsuswe24/CSC-510-Project2-PopcornPicks/pulse)
