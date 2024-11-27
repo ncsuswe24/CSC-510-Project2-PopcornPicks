@@ -15,7 +15,7 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10211655.svg)](https://doi.org/10.5281/zenodo.10211655) 
 [![HitCount](https://hits.dwyl.com/NCSU-CSC510-Group-BHAKQH/CSC-510-Project2-PopcornPicks.svg)](https://hits.dwyl.com/NCSU-CSC510-Group-BHAKQH/CSC-510-Project2-PopcornPicks)
 
-![Home page](./asset/home-page.png)
+[![Home page](./asset/home-page.png)](https://drive.google.com/file/d/1JGuStpT4BxOH3DBGgJs9Ij-wAkG-fgjd/view?usp=sharing)
 ![HTML](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white) 
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) 
 ![CSS](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
@@ -25,6 +25,8 @@
 ![JQuery](https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white)
 
 <b>
+CLICK THE ABOVE IMAGE TO VIEW OUR DEMO !
+  
 PopcornPicks isn't just a movie recommender—it's your ultimate companion for discovering cinematic magic. With a vast library of films, smart recommendations, interactive chat rooms, a seamless account system, and a dynamic review platform, PopcornPicks redefines how you explore, enjoy, and connect with the world of movies. Let us transform your movie-watching journey into something unforgettable!
 </b>
 
