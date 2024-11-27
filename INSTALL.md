@@ -15,6 +15,7 @@ https://github.com/ncsuswe24/CSC-510-Project2-PopcornPicks
 cd CSC-510-Project2-PopcornPicks
 pip install -r requirements.txt
 ```
+Note: We use python version 3.10 to quickly install requirements and run the project.
 
 ### Step 3: Get a TMDB API key at their website [here](https://www.themoviedb.org/signup)
 - Your API key can be generated under the settings page after you create your account.
