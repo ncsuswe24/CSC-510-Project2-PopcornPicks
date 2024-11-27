@@ -74,9 +74,19 @@
     <div class="col-sm-12" id="recommended_block">
     </div>
   </div>
+       <!-- Sort by Runtime Filter (Initially Hidden) -->
+<div id="sortFilter" style="display: none; margin-bottom: 20px;">
+  <label for="runtimeSort">Sort by Runtime:</label>
+  <select id="runtimeSort" class="form-control" style="width: auto; display: inline-block;">
+    <option value="">Select</option>
+    <option value="asc">Shortest to Longest</option>
+    <option value="desc">Longest to Shortest</option>
+  </select>
+</div>
   <div class="row movie-grid-row" id="predictedMovies">
   </div>
-     
+
+
   </div>
 </div>
 <div class="d-none" id="loader">

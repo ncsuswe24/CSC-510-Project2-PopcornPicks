@@ -20,3 +20,8 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
+#runtimeSort {
+    margin-top: 10px;
+    margin-bottom: 15px;
+  }
+  
