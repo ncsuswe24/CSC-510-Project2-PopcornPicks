@@ -90,37 +90,40 @@ Check out the significant changes that we made for Project 3:
 
 ## Core Features
 
-### Engaging and Interactive UI
-![UI](./asset/engage.gif)
+### Login !
+<p align="center">
+  <img src="./asset/login.gif" width="400" style="vertical-align: top;"/>
+  <img src="./asset/profile.gif" width="400" style="vertical-align: top;"/>
+</p>
+Users can login and view their personalized page
 
-### User Authentication
+### Look at our cool UI !
+<p align="center">
+  <img src="./asset/signup.gif" width="400" style="vertical-align: top;"/>
+  <img src="./asset/engage.gif" width="400" style="vertical-align: top;"/>
+</p>
 
-#### Sign up: Users can register to PopcornPicks to get the best recommendations for their favourite movies and genres
-![Sign Up](./asset/signup.gif)
+### Explore movies!
+<p align="center">
+  <img src="./asset/predicted_movie_poster.gif" width="400" style="vertical-align: top;"/>
+  <img src="./asset/new_movies.gif" width="400" style="vertical-align: top;"/>
+</p>
+Our movie recommender algorithm will make tailored new picks based on user's existing ratings and picks.
+Our New Movie feature allows users to explore recently released movies.
 
-#### Login: 
-![Login](./asset/login.gif)
+### Interact with people!
+<p align="center">
+  <img src="./asset/ChatRoom.gif" width="400" style="vertical-align: top;"/>
+  <img src="./asset/movies-list.gif" width="400" style="vertical-align: top;"/>
+</p>
+Chat with other users and see what they have seen, in their movie lists.
 
-### Personalised Profile Page for Users
-![Profile](./asset/profile.gif)
-
-### Check Out New and Upcoming Movies
-![New Movies](./asset/new_movies.gif)
-
-### Movie Recommendation Mechanism
-![Recommend](./asset/predicted_movie_poster.gif)
-
-### Write Movie Reviews
-![Review](./asset/review.gif)
-
-### See What Others Have Seen 
-![Movies](./asset/movies-list.gif)
-
-### Chat Room
-![Chat](./asset/ChatRoom.gif)
-
-### Filtering options
-![Filtering](./asset/Filtering.gif)
+### Customize your movies!
+<p align="center">
+  <img src="./asset/Filtering.gif" width="400" style="vertical-align: top;"/>
+  <img src="./asset/review.gif" width="400" style="vertical-align: top;"/>
+</p>
+Filter results and write reviews!
 
 
 ## Render Deployment
