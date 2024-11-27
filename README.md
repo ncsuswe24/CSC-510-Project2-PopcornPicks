@@ -79,14 +79,23 @@ Checkout for project documentation at our [wiki page](https://github.com/tanmayp
 Check out the significant changes that we made for Project 3:
 
 ### Like/Dislike Button for Movies
-![Chat](./asset/ChatRoom.gif)
+<p align="center">
+  <img src="./asset/like_movie.png" width="600" style="vertical-align: top;"/>
+</p>
+Users can now like/dislike movies of their choice.
 
 ### NL-Powered Prediction Engine
-![Chat](./asset/ChatRoom.gif)
+<p align="center">
+  <img src="./asset/movie_recs.png" width="600" style="vertical-align: top;"/>
+</p>
+Significant improvement in fetch time for movie recommendations. 
+New results are now much more relevant due to NLP integration.
 
 ### Sort Movies by Runtime
-![Chat](./asset/ChatRoom.gif)
-
+<p align="center">
+  <img src="./asset/sort_runtime.png" width="600" style="vertical-align: top;"/>
+</p>
+Users can now sort movies by runtime so they can better fit a movie to their schedule.
 
 ## Core Features
 
