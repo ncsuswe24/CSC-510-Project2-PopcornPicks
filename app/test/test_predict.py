@@ -4,6 +4,8 @@ This code is licensed under MIT license (see LICENSE for details)
 
 @author: PopcornPicks
 """
+import unittest
+import os
 
 import sys
 import warnings
@@ -11,17 +13,14 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 from src.item_based import recommend_for_new_user
 warnings.filterwarnings("ignore")
-import unittest
-import os
 from unittest.mock import patch, MagicMock
 from flask import json
 import pandas as pd
 import numpy as np
-# Add parent directory to path
+ 
+
+ 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from src import app, db
-from src.models import Review, Movie  # Import the Review model
-from flask_login import current_user
 
 class Tests(unittest.TestCase):
     """
@@ -37,6 +36,32 @@ class Tests(unittest.TestCase):
         ]
         recommendations = recommend_for_new_user(ts)
         self.assertTrue(recommendations.shape[0], 9)
+
+    def test_rating_excluded(self):
+        """
+        Make sure the recommendations do not include already rated user movie.
+        2024 - Test Case 1
+        """
+        ts = [
+            {"title": "Toy Story (1995)", "rating": 5.0},
+        ]
+        recommendations = recommend_for_new_user(ts)
+        self.assertFalse(any("Toy Story (1995)" in title for title in recommendations['title']))
+
+    def test_ratings_excluded(self):
+        """
+        Make sure the recommendations do not include ANY movie 
+        from already rated user movies.
+
+        2024 - Test Case 2
+        """
+        ts = [
+            {"title": "Toy Story (1995)", "rating": 5.0},
+            {"title": "Kung Fu Panda (2008)", "rating": 5.0},
+        ]
+        recommendations = recommend_for_new_user(ts)
+        self.assertFalse(any("Toy Story (1995)" in title for title in recommendations['title']))
+        self.assertFalse(any("Kung Fu Panda (2008)" in title for title in recommendations['title']))
 
     def test_kungfu_panda(self):
         """
@@ -329,11 +354,91 @@ class Tests(unittest.TestCase):
         self.assertEqual(recommendations.shape[0], 9)
         self.assertTrue(all("Science Fiction" in genres for genres in recommendations['genres']))
 
+    def test_action_and_comedy(self):
+        """
+        Multiple inputs for genre will still work, for comedy and action.
+        2024 - Test case 16
+        """
+        ts = [{"title": "Toy Story (1995)", "rating": 5.0}]
+        recommendations = recommend_for_new_user(ts, selected_genre="Action|Comedy")
+        self.assertTrue(all(("Action" in genres or "Comedy" in genres)
+                            for genres in recommendations['genres']))
+        self.assertEqual(recommendations.shape[0], 9)
+
+    def test_drama_and_romance(self):
+        """
+        Multiple inputs for genre will still work, for drama and romance.
+        2024 - Test case 17
+        """
+        ts = [{"title": "Toy Story (1995)", "rating": 5.0}]
+        recommendations = recommend_for_new_user(ts, selected_genre="Drama|Romance")
+        self.assertTrue(all(("Drama" in genres or "Romance" in genres)
+                            for genres in recommendations['genres']))
+        self.assertEqual(recommendations.shape[0], 9)
+
+    def test_comedy_drama_and_romance(self):
+        """
+        Multiple inputs for genre will still work, for comedy, drama, AND romance.
+        2024 - Test case 18
+        """
+        ts = [{"title": "Toy Story (1995)", "rating": 5.0}]
+        recommendations = recommend_for_new_user(ts, selected_genre="Comedy|Drama|Romance")
+        self.assertTrue(all(("Comedy" in genres or "Drama" in genres or "Romance" in genres)
+                            for genres in recommendations['genres']))
+        self.assertEqual(recommendations.shape[0], 9)
+
+    def test_one_nonexistent_genre(self):
+        """
+        Model will make recs as long as there is atleast one valid genre.
+        2024 - Test case 19
+        """
+        ts = [{"title": "Toy Story (1995)", "rating": 5.0}]
+        recommendations = recommend_for_new_user(ts, selected_genre="NonExistent|Action")
+        self.assertTrue(all("Action" in genres for genres in recommendations['genres']))
+        self.assertEqual(recommendations.shape[0], 9)
+
+    def test_multiple_nonexistent_genres(self):
+        """
+        Model will not make recs for multiple nonexistent genres.
+        2024 - Test case 20
+        """
+        ts = [{"title": "Toy Story (1995)", "rating": 5.0}]
+        recommendations = recommend_for_new_user(ts, selected_genre="Non|Existent")
+        self.assertEqual(recommendations.shape[0], 0)
+
     def test_empty_input(self):
         """
         Test case 32
         """
         recommendations = recommend_for_new_user([])
+        self.assertEqual(recommendations.shape[0], 0)
+
+    def test_input_wrong_format(self):
+        """
+        Dictionary formated ratings should return 0 recs.
+        2024 - Test case 14
+        """
+        ts = {
+            "title": "Toy Story (1995)", "rating": 5.0,
+        }
+        recommendations = recommend_for_new_user(ts)
+        self.assertEqual(recommendations.shape[0], 0)
+
+    def test_input_number(self):
+        """
+        Just a number for the rating should return 0 recs.
+        2024 - Test case 15
+        """
+        ts = 5.0
+        recommendations = recommend_for_new_user(ts)
+        self.assertEqual(recommendations.shape[0], 0)
+
+    def test_null_input(self):
+        """
+        Input of "None" for ratings should return 0 recs.
+        2024 - Test case 3
+        """
+        recommendations = recommend_for_new_user(None)
         self.assertEqual(recommendations.shape[0], 0)
 
     def test_no_matching_genre_year(self):
@@ -349,7 +454,8 @@ class Tests(unittest.TestCase):
         Test case 34
         """
         ts = [{"title": "Toy Story (1995)", "rating": 5.0}]
-        recommendations = recommend_for_new_user(ts, selected_genre="Slice of Life", selected_year=2030)
+        recommendations = recommend_for_new_user(ts, selected_genre="Slice of Life",
+                                                 selected_year=2030)
         self.assertEqual(recommendations.shape[0], 0)
 
     def test_no_matching_genre_year_3(self):
@@ -814,6 +920,110 @@ class Tests(unittest.TestCase):
         self.assertEqual(recommendations_clean.shape[0], 0)
         # Ensure that no error occurs and empty DataFrame is handled
 
+    def test_null_genre_valid_year(self):
+        """
+        Input of "None" for genre should still return recs filtered by year.
+        2024 - Test case 4
+        """
+        ts = [{"title": "Toy Story (1995)", "rating": 5.0}]
+        recommendations = recommend_for_new_user(ts, selected_genre=None, selected_year=1999)
+        self.assertEqual(recommendations.shape[0], 9)
+
+    def test_valid_genre_null_year(self):
+        """
+        Input of "None" for year should still return recs filtered by genre.
+        2024 - Test case 5
+        """
+        ts = [{"title": "Toy Story (1995)", "rating": 5.0}]
+        recommendations = recommend_for_new_user(ts, selected_genre="Action", selected_year=None)
+        self.assertEqual(recommendations.shape[0], 9)
+        self.assertTrue(all("Action" in genres for genres in recommendations['genres']))
+
+    def test_null_genre_null_year(self):
+        """
+        Input of "None" for genre AND year should still return unfiltered recs.
+        2024 - Test case 6
+        """
+        ts = [{"title": "Toy Story (1995)", "rating": 5.0}]
+        recommendations = recommend_for_new_user(ts, selected_genre=None, selected_year=None)
+        self.assertEqual(recommendations.shape[0], 9)
+
+    def test_negative_year(self):
+        """
+        Input of -1 for year should still return recs filtered by genre.
+        2024 - Test case 7
+        """
+        ts = [{"title": "Toy Story (1995)", "rating": 5.0}]
+        recommendations = recommend_for_new_user(ts, selected_genre="Action", selected_year=-1)
+        self.assertEqual(recommendations.shape[0], 0)
+
+    def test_nonexistent_movie(self):
+        """
+        Input of -1 for year should still return recs filtered by genre.
+        2024 - Test case 8
+        """
+        ts = [{"title": "I AM NOT REAL", "rating": 5.0}]
+        recommendations = recommend_for_new_user(ts)
+        self.assertEqual(recommendations.shape[0], 0)
+
+    def test_one_nonexistent_movie(self):
+        """
+        Input of -1 for year should still return recs filtered by genre.
+        2024 - Test case 9
+        """
+        ts = [
+            {"title": "I AM STILL NOT REAL", "rating": 5.0},
+            {"title": "Kung Fu Panda (2008)", "rating": 5.0},
+        ]
+        recommendations = recommend_for_new_user(ts)
+        self.assertEqual(recommendations.shape[0], 9)
+
+    def test_negative_rating(self):
+        """
+        Negative ratings input should return empty recs.
+        2024 - Test case 10
+        """
+        ts = [
+            {"title": "Kung Fu Panda (2008)", "rating": -5},
+        ]
+        recommendations = recommend_for_new_user(ts)
+        self.assertEqual(recommendations.shape[0], 0)
+
+    def test_one_negative_rating(self):
+        """
+        If there is atleast one valid rating input, model should still return recs.
+        2024 - Test case 11
+        """
+        ts = [
+            {"title": "Kung Fu Panda (2008)", "rating": -5.0},
+            {"title": "Kung Fu Panda (2008)", "rating": 5.0},
+        ]
+        recommendations = recommend_for_new_user(ts)
+        self.assertEqual(recommendations.shape[0], 9)
+
+    def test_null_rating(self):
+        """
+        If there are only null ratings, model should not return recs.
+        2024 - Test case 12
+        """
+        ts = [
+            {"title": "Kung Fu Panda (2008)", "rating": None},
+        ]
+        recommendations = recommend_for_new_user(ts)
+        self.assertEqual(recommendations.shape[0], 0)
+
+    def test_one_null_rating(self):
+        """
+        If there is atleast one valid rating input, model should still return recs.
+        2024 - Test case 13
+        """
+        ts = [
+            {"title": "Kung Fu Panda (2008)", "rating": None},
+            {"title": "Kung Fu Panda (2008)", "rating": 5.0},
+        ]
+        recommendations = recommend_for_new_user(ts)
+        self.assertEqual(recommendations.shape[0], 9)
 
 if __name__ == "__main__":
+
     unittest.main()
