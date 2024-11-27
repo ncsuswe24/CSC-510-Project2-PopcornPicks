@@ -45,7 +45,7 @@ PopcornPicks isn't just a movie recommender—it's your ultimate companion for d
 
 ## What is PopcornPicks?
 
-PopcornPicks is a user-friendly movie recommender that curates a tailored list of 10 movie predictions based on user-provided movie preferences. Users can input their favorite movies, and our algorithm refines recommendations based on feedback—Liked, Disliked, or Yet To Watch. Additionally, users can write reviews, save them, check out the latest movies out there and also check out the buzz going on about movies by viewing what others are writing for their reviews. For the system architecture and other details, please refer to our [wiki page](https://github.com/tanmaypardeshi/PopcornPicks/wiki)
+PopcornPicks is a user-friendly movie recommender that curates a tailored list of 10 movie predictions based on user-provided movie preferences. Users can input their favorite movies, and our algorithm refines recommendations based on feedback—Liked, Disliked, or Yet To Watch. Additionally, users can write reviews, save them, check out the latest movies out there and also check out the buzz going on about movies by viewing what others are writing for their reviews. For the system architecture and other details, please refer to our [wiki.](https://github.com/ncsuswe24/CSC-510-Project2-PopcornPicks/wiki)
 
 
 ## Why use PopcornPicks?
@@ -68,11 +68,24 @@ PopcornPicks is a user-friendly movie recommender that curates a tailored list o
 
 
 ## Installation
-Installation guide included here at our [install file](https://github.com/ncsuswe24/CSC-510-Project2-PopcornPicks/INSTALL.md)
+Installation guide included here at our [install file](https://github.com/ncsuswe24/CSC-510-Project2-PopcornPicks/blob/master/INSTALL.md)
 
 
 ## Documentation
 Checkout for project documentation at our [wiki page](https://github.com/tanmaypardeshi/PopcornPicks/wiki)
+
+
+## New Features
+Check out the significant changes that we made for Project 3:
+
+### Like/Dislike Button for Movies
+![Chat](./asset/ChatRoom.gif)
+
+### NL-Powered Prediction Engine
+![Chat](./asset/ChatRoom.gif)
+
+### Sort Movies by Runtime
+![Chat](./asset/ChatRoom.gif)
 
 
 ## Core Features
@@ -106,34 +119,17 @@ Checkout for project documentation at our [wiki page](https://github.com/tanmayp
 ### Chat Room
 ![Chat](./asset/ChatRoom.gif)
 
-
-## New Features
-Check out the significant changes that we made for Project 3:
-TODO
+### Filtering options
+![Filtering](./asset/Filtering.gif)
 
 
-### Render Deployment
+## Render Deployment
 This project is now hosted on the free web service [Render](https://render.com)! You can access the site at this URL:
 
 [http://popcorn-picks.onrender.com](http://popcorn-picks.onrender.com)
 
 *WARNING*: Since this is hosted on the free tier on render, it can be slow at times, use at your own discretion. 
 The deployment CI is set up such that any commits to the master branch will trigger a reploy of the project. This generally takes around 2-3 minutes, so if you try and access the site right after committing and receive a 502, it is most likely that the deploy has not finished yet
-
-### Filtering options
-![Filtering](./asset/Filtering.gif)
-
-We have added two filtering options for users: Genres and Release Year. Users can now personalize their recommendations by limiting them to a particular genre or a movie released in a specific year. 
-
-### Recommendation Logic
-![Review](./asset/Review.gif)
-
-We have made changes to the recommendation system. Users can review the movies they are recommended to watch, and their reviews are now included as feedback to our recommendation code logic. The users can now add scores with their reviews instead of just text. The training data includes these past reviews with the scores from the user in addition to the five movies they select. This makes the recommendations better suited to the tastes of the user. Release year and genres selected by the user are also considered when selecting the top nine recommendations.
-
-### UI Changes
-![UI](./asset/UIChanges.gif)
-
-Each movie in the database now has its own webpage where the users can read up on the movie and also view reviews from other users. This helps them make more informed decisions. This also cleans up the UI and makes for a much better experience. The users can explore and learn new information instead of being bombarded with it. 
 
 
 ## Future Scope
@@ -158,7 +154,7 @@ the future
 
 
 ## Contribute to the Project!
-Please refer to the [CONTRIBUTING.md](https://github.com/tanmaypardeshi/PopcornPicks/blob/master/CONTRIBUTING.md) if you want to contribute to the PopcornPicks source code. Follow all the guidelines mentioned in the same and raise a pull request, we would love to look at it ❤️❤️!
+Please refer to the [CONTRIBUTING.md](https://github.com/ncsuswe24/PopcornPicks/blob/master/CONTRIBUTING.md) if you want to contribute to the PopcornPicks source code. Follow all the guidelines mentioned in the same and raise a pull request, we would love to look at it ❤️❤️!
 
 
 ## Contact Us
