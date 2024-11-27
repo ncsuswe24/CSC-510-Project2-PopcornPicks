@@ -1,3 +1,6 @@
+"""
+Module runs flask app
+"""
 from src import app, socket
 
 if __name__ == '__main__':
