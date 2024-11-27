@@ -187,6 +187,3 @@ class TestLikeModel(unittest.TestCase):
         self.assertEqual(like.user_id, -1)
         self.assertEqual(like.movieId, -100)
         self.assertEqual(repr(like), "-1 liked -100")
-
-if __name__ == "__main__":
-    unittest.main()
