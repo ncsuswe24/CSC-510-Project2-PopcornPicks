@@ -494,7 +494,7 @@ class Tests(unittest.TestCase):
         recommendations = recommend_for_new_user(ts)
         # Introduce invalid runtime values
         recommendations.at[0, 'runtime'] = -90
-        recommendations.at[1, 'runtime'] = "NaN"
+        recommendations.at[1, 'runtime'] = np.nan
         # Validate runtimes
         for runtime in recommendations['runtime']:
             if isinstance(runtime, int):
@@ -506,13 +506,13 @@ class Tests(unittest.TestCase):
         """
         Test case 47: Ensure that the system handles the maximum allowed number of selected movies
         """
-        # Assuming the maximum allowed is 5 movies
+        # Using actual movies from the dataset
         ts = [
-            {"title": "Movie A (2000)", "rating": 5.0},
-            {"title": "Movie B (2001)", "rating": 5.0},
-            {"title": "Movie C (2002)", "rating": 5.0},
-            {"title": "Movie D (2003)", "rating": 5.0},
-            {"title": "Movie E (2004)", "rating": 5.0},
+            {"title": "Toy Story (1995)", "rating": 5.0},
+            {"title": "Jumanji (1995)", "rating": 5.0},
+            {"title": "Grumpier Old Men (1995)", "rating": 5.0},
+            {"title": "Waiting to Exhale (1995)", "rating": 5.0},
+            {"title": "Father of the Bride Part II (1995)", "rating": 5.0},
         ]
         recommendations = recommend_for_new_user(ts)
         self.assertEqual(recommendations.shape[0], 9)
